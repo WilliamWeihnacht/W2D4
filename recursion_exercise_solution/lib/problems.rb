@@ -1,5 +1,3 @@
-require "byebug"
-
 # Write a method, pow(base, exponent), that takes in two numbers.
 # The method should calculate the base raised to the exponent power.
 # You can assume the exponent is always positive.
@@ -15,7 +13,7 @@ require "byebug"
 # pow(4, 3) # => 64
 def pow(base, exponent)
     return 1 if exponent == 0
-    return base * pow(base,exponent - 1)
+    base * pow(base, exponent - 1)
 end
 
 
@@ -38,13 +36,10 @@ end
 # lucas_number(5)   # =>    11
 # lucas_number(9)   # =>    76
 def lucas_number(n)
-    if n == 0
-        return 2
-    elsif n == 1
-        return 1
-    else
-        return lucas_number(n-1) + lucas_number(n-2)
-    end
+    return 2 if n == 0
+    return 1 if n == 1
+
+    lucas_number(n - 1) + lucas_number(n - 2)
 end
 
 
@@ -60,11 +55,10 @@ end
 # sum_array([5, 2])         # => 7
 # sum_array([4, 10, -1, 2]) # => 15
 def sum_array(array)
-    if array == []
-        return 0
-    else
-        return array[0] + sum_array(array[1..-1])
-    end
+    return 0 if array.empty?
+    first = array[0]
+    rest = array[1..-1]
+    first + sum_array(rest)
 end
 
 
@@ -80,11 +74,8 @@ end
 # reverse_string("internet")    # => "tenretni"
 # reverse_string("friends")     # => "sdneirf"
 def reverse_string(str)
-    if str == ""
-        return ""
-    else
-        return str[-1] + reverse_string(str[0..-2])
-    end
+    return "" if str.empty? 
+    reverse_string(str[1..-1]) + str[0]
 end
 
 
@@ -117,12 +108,9 @@ end
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
 def flatten(data)
-    #debugger
-    if data == []
-        return []
-    elsif !data.kind_of?(Array)
-        return [data]
-    else
-        data.each {|x| [] += flatten(x)}
-    end
+    return [data] if !data.is_a?(Array)
+
+    flattened = []
+    data.each { |el| flattened += flatten(el) } 
+    flattened
 end
